@@ -27,23 +27,23 @@ function closeNav() {
     sideclose.style.visibility = "hidden";
 }
 
-/**    add / close domain  */
-function addmor(){
-    document.getElementById('addmor').style.display ="block";
-}
+// /**    add / close domain  */
+// function addmor(){
+//     document.getElementById('addmor').style.display ="block";
+// }
 
-function fuaddtodom(){
-    var x = document.getElementById('noveux').value;
+// function fuaddtodom(){
+//     var x = document.getElementById('noveux').value;
 
-    document.getElementById('Domaine').value = x;
+//     document.getElementById('Domaine').value = x;
 
-    document.getElementById('addmor').style.display ="none";
-}
+//     document.getElementById('addmor').style.display ="none";
+// }
 
-function fuclosedom(){
-    document.getElementById('addmor').style.display ="none";
+// function fuclosedom(){
+//     document.getElementById('addmor').style.display ="none";
     
-}
+// }
 
 
 
@@ -55,49 +55,36 @@ function addinputformation(){
 
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("inputformation").innerHTML +=`<div class="form-group" >
-                        <fieldset class="border mt-2">
-                            <label class="control-label" for="noveux">noveux info</label>
-                            <div class="form-group" >
-                                <div class="input-group mb-3">
-                                    <input class="form-control" type="text" placeholder="Taper Votre noveux info...">
-                                    <div class="input-group-append" onclick="addinputformation();">
-                                        <span class="input-group-text bg-primary  ">
-                                            <i class="fas fa-plus text-light "></i>
-                                        </span>
-                                    </div>
-                                    <div class="input-group-append" onclick="deleteinputformation(this);">
-                                        
-                                        <span class="input-group-text bg-danger ">
-                                            <i class="fas fa-times-circle text-light "></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="container">
-                                    <label class="control-label" for="noveux">noveux content</label>
-                                    <fieldset class="border mt-2">
-                                    <div class="form-group">
-                                        
-                                        <div class="input-group" >
-                                            <input class="form-control"  type="text" placeholder="Taper Votre noveux info..">
-                                            <div class="input-group-append" onclick="addinputinfo(this);">
-                                                <span class="input-group-text bg-primary  ">
-                                                    <i class="fas fa-plus text-light "></i>
-                                                </span>
-                                            </div>
-                                            <div class="input-group-append " onclick="deletinputinfo(this);" id="ff">
-                                                <span class="input-group-text bg-danger ">
-                                                    <i class="fas fa-times-circle text-light "></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </fieldset>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>` ;
+            document.getElementById("inputformation").innerHTML +=`<fieldset class="border mt-2">
+            <label class="control-label" for="noveux">noveux info</label>
+            <div class="form-group" >
+                <div class="input-group mb-3">
+                    <input class="form-control" type="text" placeholder="Taper Votre noveux info...">
+                    <div class="input-group-append" onclick="addinputformation();">
+                        <span class="input-group-text bg-primary  ">
+                            <i class="fas fa-plus text-light "></i>
+                        </span>
+                    </div>
+                    <div class="input-group-append" onclick="deleteinputformation(this);" id="ll">
+                        
+                        <span class="input-group-text bg-danger ">
+                            <i class="fas fa-times-circle text-light "></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="container">
+                
+                    
+
+                    <div class="form-group">
+                        <label class="control-label" for="noveux">noveux content</label>
+                        <textarea class="form-control" id="article-ckeditor" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 85px;"></textarea>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </fieldset>` ;
         }
     };
     xmlhttp.open("GET", "editeprofile", true);

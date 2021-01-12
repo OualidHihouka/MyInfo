@@ -15,12 +15,20 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::get('/home','PagesController@home');
+Route::resource('/home','home');
 
-Route::get('/userscv','PagesController@userscv');
+Route::resource('/userscv','userscv');
 
-Route::get('/profile','PagesController@profile');
+Route::resource('/profile','profile');
 
-Route::get('/editeprofile','PagesController@editeprofile');
+Route::resource('/editeprofile','editeprofile');
 
-Route::get('/contact','PagesController@contact');
+Route::resource('/contact','contact');
+
+Route::resource('/register','register');
+
+Route::get('/adddomin',[
+    'uses'=>'register@adddomin',
+    'as' => 'register.adddomin'
+]);
+
