@@ -27,8 +27,35 @@ Route::resource('/contact','contact');
 
 Route::resource('/register','register');
 
+Route::resource('/infocvcontroller','infocvcontroller');
+
+//Route::resource('/login','login');
+
 Route::get('/adddomin',[
     'uses'=>'register@adddomin',
     'as' => 'register.adddomin'
 ]);
+
+Route::get('/login',[
+    'uses'=>'login@index',
+    'as' => 'login.index'
+]);
+
+Route::post('/login',[
+    'uses'=>'login@auth',
+    'as' => 'login.auth'
+]);
+
+// Route::post('/editeprofile',[
+//     'uses'=>'editeprofile@addinfocv',
+//     'as' => 'editeprofile.addinfocv'
+// ]);
+
+
+Route::get('/logout',[
+    'uses'=>'login@logout',
+    'as' => 'login.logout'
+]);
+
+
 

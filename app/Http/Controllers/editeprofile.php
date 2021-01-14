@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\infocv;
+use Auth;
+use Validator;
 
 class editeprofile extends Controller
 {
@@ -45,7 +49,8 @@ class editeprofile extends Controller
      */
     public function show($id)
     {
-        //
+        $user =  User::find($id);
+        return view('pages.editeprofile')->with('user',$user);
     }
 
     /**
@@ -56,7 +61,8 @@ class editeprofile extends Controller
      */
     public function edit($id)
     {
-        //
+        // $user =  User::find($id);
+        // return view('pages.editeprofile')->with('user',$user);
     }
 
     /**
@@ -81,4 +87,28 @@ class editeprofile extends Controller
     {
         //
     }
+
+    // public function addinfocv()
+    // {
+    //     $rules = array(
+    //         'furst_coll'  => 'required|min:3',
+    //         'secend_coll2'  => 'required|min:3',
+    //         'id_users'  => 'required|min:1'
+    //     );
+    //     $error = Validator::make($request->all(),$rules);
+    //     if($error->fails())
+    //     {
+    //         return response()->json(['error' => $error->errors()->all()]);
+    //     }
+
+
+    //     $form_data = array(
+    //         'furst_coll' => $request->furst_coll,
+    //         'secend_coll2' => $request->secend_coll2,
+    //         'id_users' => $request->id_users
+    //     );    
+               
+    //     infocv::create($form_data);
+    //     return response()->json(['success' => 'Info Bien Ajouter']);
+    // }
 }

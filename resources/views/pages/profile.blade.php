@@ -28,23 +28,29 @@
               
             <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
             <div id="main" style="margin-top: -130px;">
-                
-                <div class="card">
+                @if (Session::has('succes'))
+                    <div class="alert alert-dismissible alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong><i class="fas fa-check"></i> {{Session::get('succes')}} </strong>    
+                    </div>
+                @endif 
 
+                <div class="card">
+                
                     <div class="card-header ">
                         <div class="row" >
                             <div class="col-3">
-                                <img class="card-img-top  img-fluid"  src="images/cvOualid.jpg"  alt="Card image cap">
+                                <img class="card-img-top  img-fluid"  src="images/cv1.png"  alt="Card image cap">
                             </div>
                             <div class="col-4">
-                                <h3 class="card-title ">Card title</h3>
-                                <p class="mt-2">Domaine</p>
+                                <h3 class="card-title ">{{$user->name}}</h3>
+                                <p class="mt-2">{{$user->domaine}}</p>
                             </div>
                             <div class="col-5 border ">
-                                <h3 class="col ">tele</h3>
-                                <h3 class="col ">address</h3>
+                                <h3 class="col ">{{$user->tele}}</h3>
+                                <h3 class="col ">{{$user->addres}}</h3>
                                 <div class="float-left mt-2">
-                                    <button type="button" class="btn btn-link col" style="color:#232341cb"><h3>Email</h3></button>
+                                    <button type="button" class="btn btn-link col" style="color:#232341cb"><h3>{{$user->email}}</h3></button>
                                 </div>
                                 
                             </div>

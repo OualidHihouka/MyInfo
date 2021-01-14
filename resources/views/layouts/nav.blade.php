@@ -11,31 +11,36 @@
           <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/userscv">UsersCv</a>
+          <a class="nav-link" href="{{route('userscv.index')}}">UsersCv</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
+          <a class="nav-link" href="{{route('contact.index')}}">Contact</a>
         </li>
 
          
       </ul>
 
       <ul class="navbar-nav navbar-right ">
+        @if (!(Auth::user()))
             <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="{{route('login.index')}}">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+                <a class="nav-link" href="{{route('register.index')}}">Register</a>
             </li>
+
+        @else
+
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}}</a>
                 <div class="dropdown-menu  dropdown-menu-right">
-                    <a class="dropdown-item" href="/profile">Profile</a>
-                    <a class="dropdown-item" href="/editeprofile">Edite Profile</a>
+                    <a class="dropdown-item" href="{{route('profile.show',['id'=>Auth::user()->id])}}">Profile</a>
+                    <a class="dropdown-item" href="{{route('editeprofile.show',['id'=>Auth::user()->id])}}">Edite Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
+                    <a class="dropdown-item" href="{{route('login.logout')}}">Deconnection</a>
                 </div>
             </li>
+          @endif
         </ul> 
     </div>
   </nav>

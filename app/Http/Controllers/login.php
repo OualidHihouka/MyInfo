@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
+use Auth;
+use App\User;
 
-class profile extends Controller
+class login extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,34 @@ class profile extends Controller
      */
     public function index()
     {
-        return view('pages.profile');
+        return view('pages.login');
     }
 
+    // auth
+    public function auth(Request $request)
+    {
+        $this->validate($request,[
+            'email'             => 'required',
+            'password'          => 'required|min:6'
+        ]);
+
+
+        if (Auth::attempt(['email' => $request-> email, 'password' => $request-> password])) 
+        {
+            $user = Auth::user()->id;
+            return redirect()->route('profile.show',['id'=>Auth::user()->id])->with(['succes'=>'Login avec Succes','user'=>$user]);
+        }
+        else
+        {
+            return redirect()->back()->with(['Fail'=>'Email ou Mote de passe est un correct !!!']);
+        }
+    }
+// deconnectio
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('home.index');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -35,7 +61,7 @@ class profile extends Controller
      */
     public function store(Request $request)
     {
-        
+        //
     }
 
     /**
@@ -45,9 +71,8 @@ class profile extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
-        $user =  User::find($id);
-        return view('pages.profile')->with('user',$user);
+    {
+        //
     }
 
     /**

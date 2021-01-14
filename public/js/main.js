@@ -51,6 +51,8 @@ function closeNav() {
 
 // ******************************    edite profile ***************
 function addinputformation(){
+    $('textarea').ckeditor();
+    $('.textarea').ckeditor();
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
@@ -65,7 +67,7 @@ function addinputformation(){
                             <i class="fas fa-plus text-light "></i>
                         </span>
                     </div>
-                    <div class="input-group-append" onclick="deleteinputformation(this);" id="ll">
+                    <div class="input-group-append" onclick="deleteinputformation(this);" >
                         
                         <span class="input-group-text bg-danger ">
                             <i class="fas fa-times-circle text-light "></i>
@@ -74,13 +76,27 @@ function addinputformation(){
                 </div>
                 <div class="container">
                 
-                    
+                    <label class="control-label" for="noveux">noveux content</label>
 
+                    <fieldset class="border mt-2">
                     <div class="form-group">
-                        <label class="control-label" for="noveux">noveux content</label>
-                        <textarea class="form-control" id="article-ckeditor" rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 85px;"></textarea>
+                        
+                        <div class="input-group" >
+                            <input class="form-control"  type="text" placeholder="Taper Votre noveux info..">
+                            <div class="input-group-append" onclick="addinputinfo(this);">
+                                <span class="input-group-text bg-primary  ">
+                                    <i class="fas fa-plus text-light "></i>
+                                </span>
+                            </div>
+                            <div class="input-group-append " onclick="deletinputinfo(this);" id="ff">
+                                <span class="input-group-text bg-danger ">
+                                    <i class="fas fa-times-circle text-light "></i>
+                                </span>
+                            </div>
+                        </div>
+                        
                     </div>
-                    
+                </fieldset>
                     
                 </div>
             </div>

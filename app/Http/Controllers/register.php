@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\domaine;
+use Auth;
 use Illuminate\Http\Request;
 
 class register extends Controller
@@ -15,7 +16,8 @@ class register extends Controller
      */
     public function index()
     {
-        return view('pages.register');
+        $alldomines =  domaine::all();
+        return view('pages.register')->with('alldomines',$alldomines);
     }
 
     
@@ -40,16 +42,19 @@ class register extends Controller
     {
         $this->validate($request,[
             'name'              => 'required|min:3'/*,
-            'email'             => 'required|email',
+            'email'             => 'required|email:valid',
             'password'          => 'required|min:6',
             'confirmpassword'   => 'required|same:password',
             'addres'            => 'required|min:3',
             'tele'              => 'required|min:6',
             'domaine'           => 'required|min:3',
             'nom_domaine'       => 'required|min:3',
-            'image'             => 'required|min:3',
+            'nom_domaine'       => 'required|min:3|max:255',
+            'image'             => 'required|image|max:500',
             */]
         );
+
+
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -57,8 +62,19 @@ class register extends Controller
         $user->addres = $request->addres;
         $user->tele = $request->tele;
         $user->domaine = $request->domaine;
+        $user->image = $request->image;
+        $user->description = $request->description;
         $user->save();
-        return redirect()->route('editeprofile.index')->with(['succes'=>'Compte Creer avec Succes']);
+
+        if (Auth::attempt(['email' => $request-> email, 'password' => $request-> password])) 
+        {
+            $user = Auth::user()->id;
+            return redirect()->route('editeprofile.show',['id'=>Auth::user()->id])->with(['succes'=>'Compte Creer avec Succes','user'=>$user]);
+        }
+        else
+        {
+            return redirect()->back()->with(['Fail'=>'Email ou Mote de passe est un correct !!!']);
+        }
     }
 
     /**
@@ -69,7 +85,6 @@ class register extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -117,7 +132,9 @@ class register extends Controller
         
         $domi->nom_domaine = $request->nom_domaine;
         $domi->save();  
+        
         return redirect()->route('register.index')->with(['succes'=>'Domaine Creer avec Succes']);
         //print_r($request->all());
+        
     }
 }

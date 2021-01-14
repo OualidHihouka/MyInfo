@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Auth;
+use App\infocv;
+use Validator;
+
 use Illuminate\Http\Request;
 
-class profile extends Controller
+class infocvcontroller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +18,7 @@ class profile extends Controller
      */
     public function index()
     {
-        return view('pages.profile');
+        //
     }
 
     /**
@@ -36,6 +40,44 @@ class profile extends Controller
     public function store(Request $request)
     {
         
+        // $rules = array(
+        //     'furst_coll'  => 'required|min:3',
+        //     'secend_coll2'  => 'required|min:3',
+        //     'id_users'  => 'required|min:1'
+        // );
+        // $error = Validator::make($request->all(),$rules);
+        // if($error->fails())
+        // {
+        //     return response()->json(['error' => $error->errors()->all()]);
+        // }
+
+
+        // $form_data = array(
+        //     'furst_coll' => $request->furst_coll,
+        //     'secend_coll2' => $request->secend_coll2,
+        //     'id_users' => $request->id_users
+        // );    
+               
+        // infocv::create($form_data);
+        // return response()->json(['success' => 'Info Bien Ajouter']);
+
+
+
+        $this->validate($request,[
+            'furst_coll'  => 'required|min:3',
+            'secend_coll2'  => 'required|min:3',
+            'id_users'  => 'required|min:1'
+            ]
+        );
+        $infocv = new Infocv();
+        
+        $infocv->furst_coll = $request->furst_coll;
+        $infocv->secend_coll2 = $request->secend_coll2;
+        $infocv->id_users =$request->id_users;
+        $infocv->save();  
+
+        return redirect()->back()->with(['succes'=>'Info Bien Ajouter']);
+       
     }
 
     /**
@@ -45,9 +87,8 @@ class profile extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
-        $user =  User::find($id);
-        return view('pages.profile')->with('user',$user);
+    {
+        //
     }
 
     /**

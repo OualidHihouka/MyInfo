@@ -4,13 +4,13 @@
 
 @section('content')
     <div class="content"> 
-        <div class="container continuser" style="padding:8px; background-color: #b1afb842;">
+        <div class="container continuser" id="err" style="padding:8px; background-color: #b1afb842;">
             @if (Session::has('succes'))
-            <div class="alert alert-dismissible alert-success">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong><i class="fas fa-check"></i> {{Session::get('succes')}} </strong>    
-            </div>
-        @endif
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong><i class="fas fa-check"></i> {{Session::get('succes')}} </strong>    
+                </div>
+            @endif
             <a data-toggle="collapse" >
                 <button type="button" class="btn btn-dark btn-lg btn-block"> Inscription </button>
             </a>
@@ -60,11 +60,15 @@
                             </div>
                             <div class="form-group">
                                 <fieldset>
-                                <label class="control-label" for="tele">Tele</label>
-                                <input class="form-control" id="tele" name="tele" type="tel" placeholder="Taper Votre Tele..." required>
+                                    <label class="control-label" for="tele">Tele</label>
+                                    
+                                    <input class="form-control" id="tele" name="tele" type="tel" placeholder="Taper Votre Tele..." required>
+                                    
                                 </fieldset>
                             </div>
-    
+                            
+                                
+                           
                             {{-- //domaine --}}
                             <div class="form-group">
                                 <fieldset>
@@ -74,9 +78,9 @@
                                             <div class="input-group mb-3">
                                                 <select class="custom-select" id="domaine" name="domaine" required>
                                                     <option selected="" disabled>Open this to select Domaine</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    @foreach ($alldomines as $domaine)
+                                                        <option value="{{$domaine->nom_domaine}}">{{$domaine->nom_domaine}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <div class="input-group-append" data-toggle="modal" data-target="#largeModal" style="cursor: cell">
                                                     <span class="input-group-text bg-primary">
@@ -105,8 +109,10 @@
 
                             <div class="form-group">
                                 <fieldset>
-                                <label class="control-label" for="description">Description</label>
-                                <input class="form-control" id="description" name="description" type="text" placeholder="Taper Votre Description...">
+                                    <div class="form-group">
+                                        <label class="control-label" for="description">Description</label>
+                                        <textarea class="form-control article-ckeditor" name="description"  rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 85px;"></textarea>
+                                    </div>
                                 </fieldset>
                             </div>
 
@@ -136,7 +142,7 @@
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary" id="butsave">Add</button>
                     </div>
                 </form>
               </div>
@@ -145,39 +151,3 @@
     </div>
 @endsection
 
-
-
-
-
-
-
-<div class="container">
-    
-
-    <div class="form-group" id="addmor">
-        <label class="control-label" for="nom_domaine">noveux domaine</label>
-        <div class="form-group" >
-        <div class="input-group mb-3">
-
-            <form action="{{route('register.adddomin')}}" method="post">
-
-                <input class="form-control" id="nom_domaine" name="nom_domaine" type="text" placeholder="Taper Votre noveux domaine..." required>
-                <div class="input-group-append" id="addtodom" onclick="fuaddtodom();">
-                    <button type="submit" class="input-group-text">
-                        <i class="fas fa-check text-success"></i>
-                    </button>
-                </div>
-
-            </form>
-
-            <div class="input-group-append" id="closedom" onclick="fuclosedom();">
-                <span class="input-group-text">
-                    <i class="fas fa-times-circle text-danger"></i>
-                </span>
-            </div>
-        </div>
-        </div>
-    </div>
-
-
-</div>

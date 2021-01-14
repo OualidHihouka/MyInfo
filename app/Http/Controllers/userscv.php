@@ -1,6 +1,9 @@
 <?php
 
+
 namespace App\Http\Controllers;
+
+use App\User;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +16,8 @@ class userscv extends Controller
      */
     public function index()
     {
-        return view('pages.userscv');
+        $allusers =  User::orderBy('created_at','desc')->paginate(6);
+        return view('pages.userscv')->with('allusers',$allusers);
     }
 
     /**

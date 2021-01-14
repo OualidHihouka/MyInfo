@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Auth;
+use App\Infocv;
 use Illuminate\Http\Request;
 
-class profile extends Controller
+
+
+class infocv extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +18,7 @@ class profile extends Controller
      */
     public function index()
     {
-        return view('pages.profile');
+        //
     }
 
     /**
@@ -35,7 +39,7 @@ class profile extends Controller
      */
     public function store(Request $request)
     {
-        
+      
     }
 
     /**
@@ -45,9 +49,8 @@ class profile extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
-        $user =  User::find($id);
-        return view('pages.profile')->with('user',$user);
+    {
+        //
     }
 
     /**
