@@ -17,7 +17,10 @@
 
     </head>
     <body>
-        @include('layouts.body')
+
+
+        
+        @include('layouts.pages')
 
         
         <!-- javascript -->

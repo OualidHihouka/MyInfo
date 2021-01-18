@@ -1,9 +1,10 @@
 @extends('index')
 
-@include('layouts.nav')
 
 @section('content')
-    <div class="content">
-        hello contact
+    <div class="content scrl">
+        <div class="scrl">
+            hello contact
+        </div> 
     </div>
 @endsection

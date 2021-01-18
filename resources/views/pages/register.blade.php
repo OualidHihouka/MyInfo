@@ -1,6 +1,6 @@
 @extends('index')
 
-@include('layouts.nav')
+
 
 @section('content')
     <div class="content"> 
@@ -26,7 +26,7 @@
                                 @endforeach
                             </div>
                         @endif
-                        <form action="{{route('register.store')}}" method="post">
+                        <form action="{{route('register.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <fieldset>
@@ -99,20 +99,18 @@
                             <div class="form-group">
                                 <label class="control-label" for="noveux">Choose file</label>
                                 <div class="input-group mb-3">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="image" name="image">
-                                    <label class="custom-file-label" for="image" ><i class="fas fa-upload"></i> Chose file </label>
-                                    
-                                </div>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="image" name="image">
+                                        <label class="custom-file-label" for="image" ><i class="fas fa-upload"></i> Chose file </label>
+                                        
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <fieldset>
-                                    <div class="form-group">
-                                        <label class="control-label" for="description">Description</label>
-                                        <textarea class="form-control article-ckeditor" name="description"  rows="3" style="margin-top: 0px; margin-bottom: 0px; height: 85px;"></textarea>
-                                    </div>
+                                    <label class="control-label" for="description">Description</label>
+                                    <input class="form-control" id="description" name="description"  type="text" placeholder="taper votre Description..." multiline>
                                 </fieldset>
                             </div>
 
@@ -135,6 +133,7 @@
                   </button>
                 </div>
                 <form action="{{route('register.adddomin')}}" method="get">
+                    @csrf
                     <div class="modal-body">
 
                          <input class="form-control" id="nom_domaine" name="nom_domaine" type="text" placeholder="Taper Votre noveux domaine..." required>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
+use App\Infocv;
+use Validator;
+use App\domaine;
 
 class login extends Controller
 {

@@ -1,18 +1,17 @@
 @extends('index')
 
 @section('content')
-    <div class="content" style="position: relative;">
+    <div class="content">
         
-        <div id="carouselExampleCaptions" class="carousel slide carousel_height" data-ride="carousel">
+        <div id="carouselExampleCaptions" class="carousel slide carousel_height home" data-ride="carousel">
 
-            <a class="btn btn-success btn-lg fix" href="/userscv">
-                Get Started <i class="fas fa-angle-double-right"></i>
-            </a>
+          <a class="button fix" style="vertical-align:middle" href="/userscv"><span>Get Started </span></a>
             
-            <ol class="carousel-indicators bg-secondary">
-                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+            
+            <ol class="carousel-indicators carousel_stl">
+                <li data-target="#carouselExampleCaptions"  data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleCaptions"  data-slide-to="1"></li>
+                <li data-target="#carouselExampleCaptions"  data-slide-to="2"></li>
             </ol>
 
             <div class="carousel-inner d-center">

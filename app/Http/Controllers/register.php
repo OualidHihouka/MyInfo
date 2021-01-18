@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\domaine;
 use Auth;
+use App\infocv;
+use Validator;
 use Illuminate\Http\Request;
 
 class register extends Controller
@@ -41,19 +43,21 @@ class register extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'              => 'required|min:3'/*,
-            'email'             => 'required|email:valid',
+            'name'              => 'required|min:3',
+            'email'             => 'required|email',
             'password'          => 'required|min:6',
             'confirmpassword'   => 'required|same:password',
             'addres'            => 'required|min:3',
             'tele'              => 'required|min:6',
             'domaine'           => 'required|min:3',
-            'nom_domaine'       => 'required|min:3',
-            'nom_domaine'       => 'required|min:3|max:255',
-            'image'             => 'required|image|max:500',
-            */]
+            'image'             => 'required|image|max:512',
+            'description'       => 'required|min:3'
+            ]
         );
 
+        $img = $request->image;
+        $nameimg = time().'_'.$img->getClientOriginalName();
+        $img->move(public_path().'/images/',$nameimg);
 
         $user = new User();
         $user->name = $request->name;
@@ -62,14 +66,15 @@ class register extends Controller
         $user->addres = $request->addres;
         $user->tele = $request->tele;
         $user->domaine = $request->domaine;
-        $user->image = $request->image;
+        $user->image = $nameimg;
         $user->description = $request->description;
         $user->save();
 
         if (Auth::attempt(['email' => $request-> email, 'password' => $request-> password])) 
         {
+            $alldomines =  domaine::all();
             $user = Auth::user()->id;
-            return redirect()->route('editeprofile.show',['id'=>Auth::user()->id])->with(['succes'=>'Compte Creer avec Succes','user'=>$user]);
+            return redirect()->route('editeprofile.show',['id'=>Auth::user()->id])->with(['succes'=>'Compte Creer avec Succes','user'=>$user,'alldomines'=>$alldomines]);
         }
         else
         {
@@ -132,8 +137,14 @@ class register extends Controller
         
         $domi->nom_domaine = $request->nom_domaine;
         $domi->save();  
+        if ((Auth::user())){
+            $alldomines =  domaine::all();
+            $user = Auth::user()->id;
+            return redirect()->route('editeprofile.show',['id'=>Auth::user()->id])->with(['succes'=>'domaine Creer avec Succes','user'=>$user,'alldomines'=>$alldomines]);
+        }else{
+            return redirect()->route('register.index')->with(['succes'=>'Domaine Creer avec Succes']);
+        }
         
-        return redirect()->route('register.index')->with(['succes'=>'Domaine Creer avec Succes']);
         //print_r($request->all());
         
     }

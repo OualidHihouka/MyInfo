@@ -1,6 +1,5 @@
 @extends('index')
 
-@include('layouts.nav')
 
 @section('content')
     <div class="container">

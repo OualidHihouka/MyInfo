@@ -46,16 +46,31 @@ Route::post('/login',[
     'as' => 'login.auth'
 ]);
 
-// Route::post('/editeprofile',[
-//     'uses'=>'editeprofile@addinfocv',
-//     'as' => 'editeprofile.addinfocv'
-// ]);
+Route::post('/editeprofile/{id}',[
+    'uses'=>'editeprofile@update',
+    'as' => 'editeprofile.update'
+]);
+
+
+Route::get('/editeprofile/{id1}/infocvcontroller/destroy/{id}','infocvcontroller@destroy');
+
+Route::post('/infocvcontroller/update/{id}','infocvcontroller@update');
 
 
 Route::get('/logout',[
     'uses'=>'login@logout',
     'as' => 'login.logout'
 ]);
+
+// Route::post('/userscv/show/','userscv@show');
+
+// Route::post('/userscv/show',[
+//     'uses'=>'userscv@show',
+//     'as' => 'userscv.show'
+// ]);
+
+
+//2480*3508
 
 
 

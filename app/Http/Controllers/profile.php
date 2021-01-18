@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
+use App\User;
+use App\infocv;
+use Auth;
+use Validator;
 
 class profile extends Controller
 {
@@ -46,8 +49,10 @@ class profile extends Controller
      */
     public function show($id)
     { 
+        $allinfocv =  infocv::orderBy('created_at')->get();
         $user =  User::find($id);
-        return view('pages.profile')->with('user',$user);
+        return view('pages.profile')->with(['user'=>$user,'allinfocv'=>$allinfocv]);
+
     }
 
     /**

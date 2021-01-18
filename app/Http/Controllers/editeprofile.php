@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use App\User;
-use App\infocv;
+use App\Infocv;
 use Auth;
 use Validator;
+use App\domaine;
 
 class editeprofile extends Controller
 {
@@ -49,8 +52,15 @@ class editeprofile extends Controller
      */
     public function show($id)
     {
+
+        //$allinfocv =  infocv::orderBy('created_at','asc')->paginate();
+        //return view('pages.userscv')->with('allinfocv',$allinfocv);
+        //$allinfocv =  infocv::find($id);
+
+        $alldomines =  domaine::all();
+        $allinfocv =  infocv::orderBy('created_at')->get();
         $user =  User::find($id);
-        return view('pages.editeprofile')->with('user',$user);
+        return view('pages.editeprofile')->with(['user'=>$user,'allinfocv'=>$allinfocv,'alldomines'=>$alldomines]);
     }
 
     /**
@@ -61,8 +71,7 @@ class editeprofile extends Controller
      */
     public function edit($id)
     {
-        // $user =  User::find($id);
-        // return view('pages.editeprofile')->with('user',$user);
+        
     }
 
     /**
@@ -74,7 +83,51 @@ class editeprofile extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name'              => 'required|min:3',
+            'email'             => 'required|',
+            // 'password'          => 'min:6',
+            // 'confirmpassword'   => 'same:password',
+            'addres'            => 'required|min:3',
+            'tele'              => 'required|min:6',
+            'domaine'           => 'required|min:3',
+            'image'             => 'image|max:512',
+            'description'       => 'required|min:3'
+            ]
+        );
+
+        // User::findOrFail($id)->update([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     // 'password' => bcrypt($request->password),
+        //     'addres' => $request->addres,
+        //     'tele' => $request->tele,
+        //     'domaine' => $request->domaine,
+        //     // 'image' => $request->image,
+        //     'description' => $request->description
+        // ]);
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->addres = $request->addres;
+        $user->tele = $request->tele;
+        $user->domaine = $request->domaine;
+
+        if ($request->hasFile('image')) 
+        {
+            Storage::deleteDirectory(storage_path($user->image));
+
+            $img = $request->image;
+            $nameimg = time().'_'.$img->getClientOriginalName();
+            $img->move(public_path().'/images/',$nameimg);
+            $user->image = $nameimg;  
+        }
+        $user->description = $request->description;
+        $user->save();
+
+
+        return redirect()->back()->with(['succes'=>'Compte Updated avec Succes']);
     }
 
     /**

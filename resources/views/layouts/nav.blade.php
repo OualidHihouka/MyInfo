@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary navy">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="/">MyInfo </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -32,7 +32,9 @@
         @else
 
             <li class="nav-item">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}}</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  {{Auth::user()->name}}
+                </a>
                 <div class="dropdown-menu  dropdown-menu-right">
                     <a class="dropdown-item" href="{{route('profile.show',['id'=>Auth::user()->id])}}">Profile</a>
                     <a class="dropdown-item" href="{{route('editeprofile.show',['id'=>Auth::user()->id])}}">Edite Profile</a>

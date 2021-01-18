@@ -16,4 +16,11 @@ class Infocv extends Model
 	protected $fillable = [
 		'furst_coll','secend_coll2','id_users'
 	];
+
+
+	public static function updateData($id,$data){
+		DB::table('infos_cv')
+		  ->where('id', $id)
+		  ->update($data);
+	}
 }
