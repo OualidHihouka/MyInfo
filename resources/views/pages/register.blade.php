@@ -30,39 +30,39 @@
                             @csrf
                             <div class="form-group">
                                 <fieldset>
-                                <label class="control-label" for="name">Nom</label>
+                                <label class="control-label" for="name">Nom*</label>
                                 <input class="form-control" id="name" name="name" type="text" placeholder="Taper Votre Nom..." required>
                                 </fieldset>
                             </div>
                             <div class="form-group">
                                 <fieldset>
-                                <label class="control-label" for="email">Email</label>
+                                <label class="control-label" for="email">Email*</label>
                                 <input class="form-control" id="email" name="email" type="email" placeholder="Taper Votre Email..." required>
                                 </fieldset>
                             </div>
                             <div class="form-group">
                                 <fieldset>
-                                <label class="control-label" for="password">Password</label>
+                                <label class="control-label" for="password">Password*</label>
                                 <input class="form-control" id="password" name="password"  type="password" placeholder="Taper Votre Password..." required>
                                 </fieldset>
                             </div>
                             <div class="form-group">
                                 <fieldset>
-                                <label class="control-label" for="confirmpassword">Confirmer Password</label>
+                                <label class="control-label" for="confirmpassword">Confirmer Password*</label>
                                 <input class="form-control" id="confirmpassword" name="confirmpassword" type="password" placeholder="Taper Votre confirmation..." required>
                                 </fieldset>
                             </div>
                             <div class="form-group">
                                 <fieldset>
                                 <label class="control-label" for="addres">Address</label>
-                                <input class="form-control" id="addres" name="addres"  type="text" placeholder="Taper Votre Address..." required>
+                                <input class="form-control" id="addres" name="addres"  type="text" placeholder="Taper Votre Address..." >
                                 </fieldset>
                             </div>
                             <div class="form-group">
                                 <fieldset>
                                     <label class="control-label" for="tele">Tele</label>
                                     
-                                    <input class="form-control" id="tele" name="tele" type="tel" placeholder="Taper Votre Tele..." required>
+                                    <input class="form-control" id="tele" name="tele" type="tel" placeholder="Taper Votre Tele..." >
                                     
                                 </fieldset>
                             </div>
@@ -76,7 +76,7 @@
                                         <label class="control-label" for="domaine">Domaine</label>
                                         <div class="form-group">
                                             <div class="input-group mb-3">
-                                                <select class="custom-select" id="domaine" name="domaine" required>
+                                                <select class="custom-select" id="domaine" name="domaine" >
                                                     <option selected="" disabled>Open this to select Domaine</option>
                                                     @foreach ($alldomines as $domaine)
                                                         <option value="{{$domaine->nom_domaine}}">{{$domaine->nom_domaine}}</option>

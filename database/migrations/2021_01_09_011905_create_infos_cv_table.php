@@ -13,10 +13,11 @@ class CreateInfosCvTable extends Migration
      */
     public function up()
     {
+
         Schema::create('infos_cv', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('furst_coll');
-            $table->string('secend_coll2');
+            $table->text('secend_coll2');
             $table->integer('id_users');
             $table->timestamps();
         });

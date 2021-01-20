@@ -11,6 +11,7 @@ use App\domaine;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class userscv extends Controller
 {
@@ -22,12 +23,9 @@ class userscv extends Controller
 
     public function index()
     {
-        $shearch_bar = '0';
-        $sh_par_domaine = '0';
-        $shearch_order = '0';
         $alldomines =  domaine::all();
-        $allusers =  User::orderBy('updated_at','asc')->paginate(6);
-        return view('pages.userscv')->with(['allusers'=>$allusers , 'alldomines'=>$alldomines,'shearch_bar'=>$shearch_bar , 'sh_par_domaine'=>$sh_par_domaine , 'shearch_order'=>$shearch_order]);
+        $allusers =  User::orderBy('updated_at','desc')->paginate(6);
+        return view('pages.userscv')->with(['allusers'=>$allusers , 'alldomines'=>$alldomines]);
     }
 
     /**
@@ -48,39 +46,62 @@ class userscv extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->has('bar_shearch') || $request->has('par_domaine') || $request->has('trier_par') ){
 
-        $rules = array(
-            'bar_shearch'  => 'min:1',
-            'trier_par'  => 'min:1',
-            'par_domaine'  => 'min:1'
-        );
+            if ($request->has('ck_trier') && !$request->has('ck_domine')) {
 
-        $error = Validator::make($request->all(),$rules);
-        if($error->fails())
-        {
-            return response()->json(['errors' => $error->errors()->all()]);
-        }  
+                $allusers = DB::table('users')->where('name' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('email' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('addres' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('tele' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orderBy('updated_at', $request->trier_par )->paginate(6);
+            }
 
-        // $shearch_bar = DB::table('users')->where('name' , 'like' , '%'. $request->bar_shearch . '%')
-        //                                  ->orWhere('email' , 'like' , '%'. $request->bar_shearch . '%')
-        //                                  ->orWhere('addres' , 'like' , '%'. $request->bar_shearch . '%')
-        //                                  ->orWhere('tele' , 'like' , '%'. $request->bar_shearch . '%')
-        //                                  ->orWhere('domaine' , 'like' , '%'. $request->bar_shearch . '%')
-        //                                  ->orderBy('CustomerID', 'desc')->paginate(6);
+            if ($request->has('ck_domine') && !$request->has('ck_trier')) {
+                if ($request->filled('bar_shearch')) {
+                    $allusers = DB::table('users')->where('name' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('email' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('addres' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('tele' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('domaine' , 'like' , '%'. $request->par_domaine . '%' )->paginate(6);
+                }
+                else{
+                    $allusers = DB::table('users')->where('domaine' , 'like' , '%'. $request->par_domaine . '%' )->paginate(6);
+                }
+                
+            }
+            if(!$request->has('ck_domine') && !$request->has('ck_trier'))
+            {
+                $allusers = DB::table('users')->where('name' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('email' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('addres' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orWhere('tele' , 'like' , '%'. $request->bar_shearch . '%')
+                                            ->orderBy('updated_at','desc')->paginate(6);
+            }
 
-        // $sh_par_domaine = DB::table('domaines')->where('nom_domaine' , 'like' , '%'. $request->par_domaine . '%');
-        
-        // $shearch_order =  User::orderBy('updated_at', $request->trier_par )->paginate(6);
-        
-        // return response()->json( ['shearch_bar' => $shearch_bar , 'sh_par_domaine' => $sh_par_domaine , 'shearch_order' => $shearch_order] );
+            if($request->has('ck_domine') && $request->has('ck_trier'))
+            {
+                if ($request->filled('bar_shearch')) {
+                    $allusers = DB::table('users')->where('name' , 'like' , '%'. $request->bar_shearch . '%')
+                                                ->orWhere('email' , 'like' , '%'. $request->bar_shearch . '%')
+                                                ->orWhere('addres' , 'like' , '%'. $request->bar_shearch . '%')
+                                                ->orWhere('tele' , 'like' , '%'. $request->bar_shearch . '%')
+                                                ->orWhere('domaine' , 'like' ,'%'. $request->par_domaine . '%' )
+                                                ->orderBy('updated_at', $request->trier_par )->paginate(6);
+                }
+                else{
+                    $allusers = DB::table('users')->where('domaine' , 'like' ,'%'. $request->par_domaine . '%' )
+                                                  ->orderBy('updated_at', $request->trier_par )->paginate(6);
+                }
+            }
 
-        //$allusers = DB::table('users')->orderByRow('updated_at asc');
-        //return response()->json(['allusers'=>$allusers]);
 
+            $alldomines =  domaine::all();
+            return view('pages.userscv')->with(['allusers'=>$allusers , 'alldomines'=>$alldomines]);
 
-        $shearch_bar =  User::orderBy('updated_at','desc')->paginate(6);
-        return response()->json(['shearch_bar'=>$shearch_bar]);
-
+        }else{
+            return redirect()->route('userscv.index');
+        }
     }
 
     /**

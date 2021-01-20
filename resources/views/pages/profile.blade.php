@@ -5,11 +5,11 @@
 @section('content')
     <div class="content " >
         <!-- Use any element to open the sidenav -->
-        <div class="sideopen" id="sideopen" onclick="openNav()">
+        <div class="sideopen prnthide" id="sideopen" onclick="openNav()">
             <i class="fas fa-angle-right"></i>
             <span class="sideopentext">Open</span>
         </div>
-        <div class="sideclose" id="sideclose" onclick="closeNav()">
+        <div class="sideclose prnthide" id="sideclose" onclick="closeNav()">
             <i class="fas fa-angle-left"></i>
             <span class="sideclosetext">Close</span>
         </div>
@@ -21,7 +21,7 @@
                 <a href="#card">{{$user->name}}</a>
                 @foreach ($allinfocv as $info_cv)
                     @if ( $info_cv->id_users === $user->id )
-                        <a href="#demo_{{$info_cv->id}}">{{$info_cv->furst_coll}}</a>
+                        <a class="inf" href="#demo_{{$info_cv->id}}">{{$info_cv->furst_coll}}</a>
                     @endif
                 @endforeach
             </div>
@@ -36,25 +36,35 @@
                         <strong><i class="fas fa-check"></i> {{Session::get('succes')}} </strong>    
                     </div>
                 @endif 
-
-                <div class="card" id="card">
                 
+                
+
+                    
+                    
+                    
+
+
+                <div class="card card-relative" id="card">
+                    {{-- print --}}
+                    <div class="Printbutton prnthide" onclick="myFunction1()"><i class="fas fa-print "></i></div>
+
                     <div class="card-header ">
-                        <div class="row" >
-                            <div class="form-group text-center col-sm-4">
-                                <img class="card-img-top border" src="{{URL::to('images/'.$user->image)}}" alt="Card image cap">
+                        <div class="row text-center " >
+                            <div class="form-group text-center col-xs-8 col-sm-4 col-md-3">
+                                <img class="card-img-top border max-h max-w text-center"  src="{{URL::to('images/'.$user->image)}}" alt="Card image cap">
                             </div>
-                            <div class="col-sm-8">
-                                <h3 class="card-title ">{{$user->name}}</h3>
-                                <p class="mt-2">{{$user->domaine}}</p>
+                            <div class="text-center col-xs-12 col-sm-8 col-md-4 txt-wrap row justify-content-center">
+                                <h3 class="text-center card-title col-12 m-auto">{{$user->name}}</h3>
+                                <h4 class="text-center card-title col-12 "><q class="">{{$user->domaine}}</q></h4>
                             </div>
-                            
+                            <div class="text-center col-xs-12 col-sm-12 col-md-5 txt-wrap row justify-content-center">
+                                <h4 class="text-center card-title col-12 m-auto">{{$user->tele}}</h4>
+                                <h4 class="text-center card-title col-12 m-auto">{{$user->addres}}</h4>
+                                <a href="{{route('contact.show',['id'=>$user->id])}}"><h4 class="text-center card-title col-12 m-auto">{{$user->email}}</h4></a>
+                            </div>
                         </div>
-                        <div class="border ">
-                            <h3 class="col ">{{$user->tele}}</h3>
-                            <h3 class="col ">{{$user->addres}}</h3>
-                            <h3 class="col ">{{$user->email}}</h3>
-                            
+                        <div class="card-body form-group border prnthide">
+                            {{$user->description}}
                         </div>
                         
                     </div>
@@ -86,3 +96,10 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function myFunction1() {
+        document.getElementById('main');
+        window.print();
+    }
+</script>

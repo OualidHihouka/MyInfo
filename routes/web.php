@@ -31,6 +31,11 @@ Route::resource('/infocvcontroller','infocvcontroller');
 
 //Route::resource('/login','login');
 
+Route::post('/userscv',[
+    'uses'=>'userscv@store',
+    'as' => 'userscv.store'
+]);
+
 Route::get('/adddomin',[
     'uses'=>'register@adddomin',
     'as' => 'register.adddomin'

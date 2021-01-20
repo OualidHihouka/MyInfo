@@ -63,7 +63,6 @@ class profile extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**

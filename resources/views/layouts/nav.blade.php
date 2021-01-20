@@ -11,7 +11,7 @@
           <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{route('userscv.index')}}">UsersCv</a>
+          <a class="nav-link" href="{{route('userscv.store')}}">UsersCv</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('contact.index')}}">Contact</a>

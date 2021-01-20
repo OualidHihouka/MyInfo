@@ -25,7 +25,7 @@
                     <div id="infocvside">
                         @foreach ($allinfocv as $info_cv)
                             @if ( $info_cv->id_users === $user->id )
-                                <a id="" href="#demo_{{$info_cv->id}}">{{$info_cv->furst_coll}}</a>
+                                <a id="" class="inf" href="#demo_{{$info_cv->id}}">{{$info_cv->furst_coll}}</a>
                             @endif
                         @endforeach
                     </div>

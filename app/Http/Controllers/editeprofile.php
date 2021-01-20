@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use App\User;
 use App\Infocv;
@@ -85,27 +86,36 @@ class editeprofile extends Controller
     {
         $this->validate($request,[
             'name'              => 'required|min:3',
-            'email'             => 'required|',
-            // 'password'          => 'min:6',
-            // 'confirmpassword'   => 'same:password',
-            'addres'            => 'required|min:3',
-            'tele'              => 'required|min:6',
-            'domaine'           => 'required|min:3',
-            'image'             => 'image|max:512',
-            'description'       => 'required|min:3'
+            'email'             => 'required|email'
             ]
         );
 
-        // User::findOrFail($id)->update([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     // 'password' => bcrypt($request->password),
-        //     'addres' => $request->addres,
-        //     'tele' => $request->tele,
-        //     'domaine' => $request->domaine,
-        //     // 'image' => $request->image,
-        //     'description' => $request->description
-        // ]);
+        if($request->filled('addres')){
+            $this->validate($request,['addres'=> 'min:3']);
+        }
+        if($request->filled('tele')){
+            $this->validate($request,['tele'=> 'min:8']);
+        }
+        if($request->filled('domaine')){
+            $this->validate($request,['domaine'=> 'min:3']);
+        }
+        if($request->filled('description')){
+            $this->validate($request,['description'=> 'min:3']);
+        }
+
+        //if the user dont inter the image
+        // if($request->has('image')){
+
+        //     $this->validate($request,['image'=> 'image|max:512']);
+
+        //     $img = $request->image;
+        //     $nameimg = time().'_'.$img->getClientOriginalName();
+        //     $img->move(public_path().'/images/',$nameimg);
+            
+        // }else{
+        //     $nameimg = "aucun_image.jpg";
+        // }
+        
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
@@ -114,10 +124,18 @@ class editeprofile extends Controller
         $user->tele = $request->tele;
         $user->domaine = $request->domaine;
 
-        if ($request->hasFile('image')) 
+        if ($request->has('image')) 
         {
-            Storage::deleteDirectory(storage_path($user->image));
+            $this->validate($request,['image'=> 'image|max:512']);
 
+            //check if the image is not the default image
+            if ($user->image != "aucun_image.jpg") {
+                $file_path = public_path().'/images/'. $user->image;
+                if(File::exists($file_path)) {
+                    unlink($file_path); //delete from storage
+                }
+            }
+            
             $img = $request->image;
             $nameimg = time().'_'.$img->getClientOriginalName();
             $img->move(public_path().'/images/',$nameimg);

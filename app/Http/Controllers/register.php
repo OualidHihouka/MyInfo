@@ -46,18 +46,34 @@ class register extends Controller
             'name'              => 'required|min:3',
             'email'             => 'required|email',
             'password'          => 'required|min:6',
-            'confirmpassword'   => 'required|same:password',
-            'addres'            => 'required|min:3',
-            'tele'              => 'required|min:6',
-            'domaine'           => 'required|min:3',
-            'image'             => 'required|image|max:512',
-            'description'       => 'required|min:3'
+            'confirmpassword'   => 'required|same:password'
             ]
         );
 
-        $img = $request->image;
-        $nameimg = time().'_'.$img->getClientOriginalName();
-        $img->move(public_path().'/images/',$nameimg);
+        if($request->filled('addres')){
+            $this->validate($request,['addres'=> 'min:3']);
+        }
+        if($request->filled('tele')){
+            $this->validate($request,['tele'=> 'min:8']);
+        }
+        if($request->filled('domaine')){
+            $this->validate($request,['domaine'=> 'min:3']);
+        }
+        if($request->filled('description')){
+            $this->validate($request,['description'=> 'min:3']);
+        }
+
+        //if the user dont inter the image
+        if($request->has('image')){
+
+            $this->validate($request,['image'=> 'image|max:512']);
+            $img = $request->image;
+            $nameimg = time().'_'.$img->getClientOriginalName();
+            $img->move(public_path().'/images/',$nameimg);
+            
+        }else{
+            $nameimg = "aucun_image.jpg";
+        }
 
         $user = new User();
         $user->name = $request->name;
