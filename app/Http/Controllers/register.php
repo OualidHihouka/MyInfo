@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 
 class register extends Controller
 {
+   
+
     /**
      * Display a listing of the resource.
      *
@@ -44,7 +46,7 @@ class register extends Controller
     {
         $this->validate($request,[
             'name'              => 'required|min:3',
-            'email'             => 'required|email',
+            'email'             => 'required|email|unique:users,email',
             'password'          => 'required|min:6',
             'confirmpassword'   => 'required|same:password'
             ]
@@ -78,7 +80,7 @@ class register extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        $user->password = \Hash::make($request->password);
         $user->addres = $request->addres;
         $user->tele = $request->tele;
         $user->domaine = $request->domaine;

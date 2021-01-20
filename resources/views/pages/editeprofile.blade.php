@@ -14,7 +14,7 @@
             <span class="sideclosetext">Close</span>
         </div>
         
-        <div class="editeprofile">
+        <div class="editeprofile body profile content_body_scroll">
             <div class="container" id="side">
 
                 <div id="mySidenav" class="sidenav">
@@ -52,14 +52,7 @@
     
                             <div id="demo3"  class="collapse show">
                                 <div class="container">
-                                    @if (!($errors->isEmpty()))
-                                        <div class="alert alert-dismissible alert-danger">
-                                            @foreach ($errors->all() as $error)
-                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                                <strong><i class="fas fa-exclamation-circle"></i> {{$error}} </strong> <br>                      
-                                            @endforeach
-                                        </div>
-                                    @endif
+                                    
                                     <div class="form-group border text-center">
                                         <img class="card-img-top height_img p-1 border " style="border-radius: 50%;width:160px;height: 160px;" src="{{URL::to('images/'.$user->image)}}" alt="Card image cap">
                                     </div>
@@ -67,38 +60,74 @@
                                         @csrf
                                         <div class="form-group">
                                             <fieldset>
-                                            <label class="control-label" for="name">Nom</label>
-                                            <input class="form-control" id="name" name="name" type="text" placeholder="{{Auth::user()->name}}" value="{{Auth::user()->name}}" >
+                                                <label class="control-label  @error('name') is-invalid @enderror " for="name">Nom</label>
+                                                <input class="form-control" id="name" name="name" type="text" placeholder="{{Auth::user()->name}}" value="{{Auth::user()->name}}" >
+                                            </fieldset>
+                                            @error('name')
+                                                <div class="alert alert-dismissible alert-danger">
+                                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                    <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <fieldset>
+                                                <label class="control-label" for="email">Email</label>
+                                                <input class="form-control @error('email') is-invalid @enderror" id="email" name="email" type="email" placeholder="{{Auth::user()->email}}" value="{{Auth::user()->email}}">
+                                                @error('email')
+                                                    <div class="alert alert-dismissible alert-danger">
+                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                        <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                    </div>
+                                                @enderror
                                             </fieldset>
                                         </div>
                                         <div class="form-group">
                                             <fieldset>
-                                            <label class="control-label" for="email">Email</label>
-                                            <input class="form-control" id="email" name="email" type="email" placeholder="{{Auth::user()->email}}" value="{{Auth::user()->email}}">
+                                                <label class="control-label" for="password">Password</label>
+                                                <input class="form-control @error('password') is-invalid @enderror" id="password" name="password"  type="password" placeholder="Entrer votre new password">
+                                                @error('password')
+                                                    <div class="alert alert-dismissible alert-danger">
+                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                        <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                    </div>
+                                                @enderror
                                             </fieldset>
                                         </div>
                                         <div class="form-group">
                                             <fieldset>
-                                            <label class="control-label" for="password">Password</label>
-                                            <input class="form-control" id="password" name="password"  type="password" placeholder="Entrer votre new password">
+                                                <label class="control-label" for="confirmpassword">Confirmer Password</label>
+                                                <input class="form-control @error('confirmpassword') is-invalid @enderror" id="confirmpassword" name="confirmpassword" type="password" placeholder="Entrer votre confirmation password">
+                                                @error('confirmpassword')
+                                                <div class="alert alert-dismissible alert-danger">
+                                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                    <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                </div>
+                                            @enderror
                                             </fieldset>
                                         </div>
                                         <div class="form-group">
                                             <fieldset>
-                                            <label class="control-label" for="confirmpassword">Confirmer Password</label>
-                                            <input class="form-control" id="confirmpassword" name="confirmpassword" type="password" placeholder="Entrer votre confirmation password">
+                                                <label class="control-label" for="addres">Address</label>
+                                                <input class="form-control @error('addres') is-invalid @enderror" id="addres" name="addres"  type="text" placeholder="{{Auth::user()->addres}}" value="{{Auth::user()->addres}}">
+                                                @error('addres')
+                                                    <div class="alert alert-dismissible alert-danger">
+                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                        <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                    </div>
+                                                @enderror
                                             </fieldset>
                                         </div>
                                         <div class="form-group">
                                             <fieldset>
-                                            <label class="control-label" for="addres">Address</label>
-                                            <input class="form-control" id="addres" name="addres"  type="text" placeholder="{{Auth::user()->addres}}" value="{{Auth::user()->addres}}">
-                                            </fieldset>
-                                        </div>
-                                        <div class="form-group">
-                                            <fieldset>
-                                            <label class="control-label" for="tele">Tele</label>
-                                            <input class="form-control" id="tele" name="tele" type="tel" placeholder="{{Auth::user()->tele}}" value="{{Auth::user()->tele}}">
+                                                <label class="control-label" for="tele">Tele</label>
+                                                <input class="form-control @error('tele') is-invalid @enderror" id="tele" name="tele" type="tel" placeholder="{{Auth::user()->tele}}" value="{{Auth::user()->tele}}">
+                                                @error('tele')
+                                                    <div class="alert alert-dismissible alert-danger">
+                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                        <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                    </div>
+                                                @enderror
                                             </fieldset>
                                         </div>
                 
@@ -109,7 +138,7 @@
                                                     <label class="control-label" for="domaine">Domaine</label>
                                                     <div class="form-group">
                                                         <div class="input-group mb-3">
-                                                            <select class="custom-select" id="domaine" name="domaine" >
+                                                            <select class="custom-select @error('domaine') is-invalid @enderror" id="domaine" name="domaine" >
                                                                 <option selected="" disabled>Open this to select Domaine</option>
                                                                 @foreach ($alldomines as $domaine)
                                                                     @if ($domaine->nom_domaine == Auth::user()->domaine)
@@ -125,7 +154,12 @@
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        
+                                                        @error('domaine')
+                                                            <div class="alert alert-dismissible alert-danger">
+                                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                                <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                            </div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -137,17 +171,30 @@
                                             <label class="control-label" for="noveux">Choose file</label>
                                             <div class="input-group mb-3">
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="image" name="image">
+                                                    <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image">
                                                     <label class="custom-file-label" for="image" ><i class="fas fa-upload"></i> Chose file </label>
                                                     
                                                 </div>
+                                                
                                             </div>
+                                            @error('image')
+                                                    <div class="alert alert-dismissible alert-danger">
+                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                        <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                    </div>
+                                                @enderror
                                         </div>
     
                                         <div class="form-group">
                                             <fieldset>
-                                            <label class="control-label" for="description">Description</label>
-                                            <input class="form-control" id="description" name="description"  type="text" placeholder="{{Auth::user()->description}}" value="{{Auth::user()->description}}">
+                                                <label class="control-label" for="description">Description</label>
+                                                <input class="form-control @error('description') is-invalid @enderror" id="description" name="description"  type="text" placeholder="{{Auth::user()->description}}" value="{{Auth::user()->description}}">
+                                                @error('description')
+                                                    <div class="alert alert-dismissible alert-danger">
+                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                        <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                                                    </div>
+                                                @enderror
                                             </fieldset>
                                         </div>
             
@@ -175,7 +222,13 @@
                                     @csrf
                                     <div class="modal-body">
     
-                                        <input class="form-control" id="nom_domaine" name="nom_domaine" type="text" placeholder="Taper Votre noveux domaine..." required>
+                                        <input class="form-control @error('nom_domaine') is-invalid @enderror" id="nom_domaine" name="nom_domaine" type="text" placeholder="Taper Votre noveux domaine..." >
+                         @error('nom_domaine')
+                            <div class="alert alert-dismissible alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong><i class="fas fa-times"></i> {{ $message }} </strong>    
+                            </div>
+                        @enderror
                                     
                                     </div>
                                     <div class="modal-footer">
@@ -493,7 +546,6 @@
 
                 }
             });
-            closeNav();
             
         });
 

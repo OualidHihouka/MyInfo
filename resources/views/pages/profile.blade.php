@@ -3,6 +3,7 @@
 
 
 @section('content')
+
     <div class="content " >
         <!-- Use any element to open the sidenav -->
         <div class="sideopen prnthide" id="sideopen" onclick="openNav()">
@@ -15,7 +16,7 @@
         </div>
         
 
-        <div class="profile" >
+        <div class="body profile content_body_scroll" >
 
             <div id="mySidenav" class="sidenav">
                 <a href="#card">{{$user->name}}</a>

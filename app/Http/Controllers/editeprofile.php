@@ -119,7 +119,7 @@ class editeprofile extends Controller
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        $user->password = \Hash::make($request->password);
         $user->addres = $request->addres;
         $user->tele = $request->tele;
         $user->domaine = $request->domaine;

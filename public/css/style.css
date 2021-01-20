@@ -26,6 +26,7 @@ body{
   right:0px;
   bottom:0px;
 }
+
 /* add scroll to container */
 .content_body_scroll{
   height: 100%;
@@ -142,7 +143,6 @@ body{
   border-left: none;
   padding: 6px;
   transition: .5s;
-  position: sticky;
 }
 
 .sideopen .sideopentext{
@@ -176,7 +176,6 @@ body{
   padding: 6px;
   transition: .5s;
   visibility: hidden;
-  position: sticky;
 }
 
 .sideclose .sideclosetext{
@@ -194,19 +193,16 @@ body{
   margin-left: 15px;
 }
 
+
+
+
+
 /* home */
 .home{
-  z-index: 9999;
+  display: inline-block;
   position: fixed;
+  z-index: 9999;
   top: 0px;
-}
-.carousel_height{
-    max-width: 100%;
-}
-
-.height_img{
-    max-height: 200px;
-
 }
 
 /* buuton de home */
@@ -262,7 +258,7 @@ body{
 
 .fix{ 
   z-index: 5;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -273,109 +269,69 @@ body{
   background-color: #22124767;
   opacity: 0.5;
 }
-/* end home */
-
-@media screen and (max-width: 526px) {
-  
-/* buuton de home */
-.button {
+.crsl{
+  position: fixed;
   display: inline-block;
-  border-radius: 4px;
-  background-color: #221247;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 18px;
-  padding: 8px;
-  width: auto;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 3px;
-  opacity: 0.8;
+  bottom: 0px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
 }
 
-.button span {
-  text-shadow: 4px 4px 3px rgb(82, 81, 87);
-  cursor: pointer;
+/* images */
+.img-p{
   display: inline-block;
   position: relative;
-  transition: 0.5s;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
 }
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -10px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  color: #FFFFFF !important;
-  opacity: 1 !important;
-  padding-right: 12px;
-}
-
-.button:hover {
-  opacity: 0.95 !important;
-}
-
-.button:hover span:after {
-  opacity: 1 !important;
-  right: 0;
-}
-}
-@media screen and (min-width: 526px) {
-  
-/* buuton de home */
-.button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #221247;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 30px;
-  padding: 20px;
-  width: auto;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-  opacity: 0.8;
-}
-
-.button span {
-  text-shadow: 4px 4px 3px rgb(82, 81, 87);
-  cursor: pointer;
-  display: inline-block;
+.img-i{
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   position: relative;
-  transition: 0.5s;
+  max-height: max-content;
+  max-width: max-content;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
 }
 
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
+
+
+
+@media screen and (max-width: 426px) {
+  
+  /* buuton de home */
+  .button {
+    font-size: 18px;
+    padding: 8px;
+    margin: 3px;
+  }
 }
 
-.button:hover span {
-  color: #FFFFFF !important;
-  opacity: 1 !important;
-  padding-right: 25px;
+@media screen and (min-width: 426px) {
+  
+  /* buuton de home */
+  .button {
+    font-size: 25px;
+    padding: 16px;
+    margin: 4px;
+  }
+
 }
 
-.button:hover {
-  opacity: 0.95 !important;
-}
+@media screen and (min-width: 726px) {
+  
+  /* buuton de home */
+  .button {
+    font-size: 30px;
+    padding: 20px;
+    margin: 5px;
+  }
 
-.button:hover span:after {
-  opacity: 1 !important;
-  right: 0;
-}
 }
 
 
@@ -402,15 +358,11 @@ body{
 
 
 
-/************ edite pofiel ***********/
-.editeprofile{
-  margin-top: -180px;
-  margin-bottom: 20px;
-}
+
 
 /************ pofiel ***********/
 .profile{
-  margin-top: -190px;
+  margin-top: -70px !important;
 }
 
 
