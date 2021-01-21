@@ -1,3 +1,4 @@
+
 <script src="{{URL::to('js/jquery-3.5.1.min.js')}}"></script>
 
 @extends('index')
@@ -54,7 +55,7 @@
                                 <div class="container">
                                     
                                     <div class="form-group border text-center">
-                                        <img class="card-img-top height_img p-1 border " style="border-radius: 50%;width:160px;height: 160px;" src="{{URL::to('images/'.$user->image)}}" alt="Card image cap">
+                                        <img class="card-img-top height_img p-1 border " style="border-radius: 50%;width:160px;height: 160px;" src="{{URL::to('images/'.Auth::user()->image)}}" alt="Card image cap">
                                     </div>
                                     <form action="{{route('editeprofile.update',['id'=>Auth::user()->id])}}" method="post" enctype="multipart/form-data">
                                         @csrf
@@ -602,3 +603,4 @@
 
     });
 </script>
+

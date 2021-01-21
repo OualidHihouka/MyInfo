@@ -14,6 +14,15 @@ use App\domaine;
 
 class editeprofile extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -57,11 +66,15 @@ class editeprofile extends Controller
         //$allinfocv =  infocv::orderBy('created_at','asc')->paginate();
         //return view('pages.userscv')->with('allinfocv',$allinfocv);
         //$allinfocv =  infocv::find($id);
-
-        $alldomines =  domaine::all();
-        $allinfocv =  infocv::orderBy('created_at')->get();
-        $user =  User::find($id);
-        return view('pages.editeprofile')->with(['user'=>$user,'allinfocv'=>$allinfocv,'alldomines'=>$alldomines]);
+        if (Auth::user()->id == $id) {
+            $alldomines =  domaine::all();
+            $allinfocv =  infocv::orderBy('created_at')->get();
+            $user =  User::find($id);
+            return view('pages.editeprofile')->with(['user'=>$user,'allinfocv'=>$allinfocv,'alldomines'=>$alldomines]);
+        }else{
+            return redirect()->back();
+        }
+        
     }
 
     /**
@@ -84,68 +97,66 @@ class editeprofile extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name'              => 'required|min:3',
-            'email'             => 'required|email'
-            ]
-        );
+        if (Auth::user()->id == $id) {
+            $this->validate($request,[
+                'name'              => 'required|min:3',
+                'email'             => 'required|email'
+                ]
+            );
 
-        if($request->filled('addres')){
-            $this->validate($request,['addres'=> 'min:3']);
-        }
-        if($request->filled('tele')){
-            $this->validate($request,['tele'=> 'min:8']);
-        }
-        if($request->filled('domaine')){
-            $this->validate($request,['domaine'=> 'min:3']);
-        }
-        if($request->filled('description')){
-            $this->validate($request,['description'=> 'min:3']);
-        }
+            $user = User::find($id);
 
-        //if the user dont inter the image
-        // if($request->has('image')){
+            $user->name = $request->name;
+            $user->email = $request->email;
 
-        //     $this->validate($request,['image'=> 'image|max:512']);
+            if($request->filled('password')){
+                $this->validate($request,['password'=> 'min:6']);
+                $user->password = \Hash::make($request->password);
+            }
 
-        //     $img = $request->image;
-        //     $nameimg = time().'_'.$img->getClientOriginalName();
-        //     $img->move(public_path().'/images/',$nameimg);
-            
-        // }else{
-        //     $nameimg = "aucun_image.jpg";
-        // }
-        
-        $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = \Hash::make($request->password);
-        $user->addres = $request->addres;
-        $user->tele = $request->tele;
-        $user->domaine = $request->domaine;
-
-        if ($request->has('image')) 
-        {
-            $this->validate($request,['image'=> 'image|max:512']);
-
-            //check if the image is not the default image
-            if ($user->image != "aucun_image.jpg") {
-                $file_path = public_path().'/images/'. $user->image;
-                if(File::exists($file_path)) {
-                    unlink($file_path); //delete from storage
-                }
+            if($request->filled('addres')){
+                $this->validate($request,['addres'=> 'min:3']);
+                $user->addres = $request->addres;
+            }
+            if($request->filled('tele')){
+                $this->validate($request,['tele'=> 'min:8']);
+                $user->tele = $request->tele;
+            }
+            if($request->filled('domaine')){
+                $this->validate($request,['domaine'=> 'min:3']);
+                $user->domaine = $request->domaine;
+            }
+            if($request->filled('description')){
+                $this->validate($request,['description'=> 'min:3']);
+                $user->description = $request->description;
             }
             
-            $img = $request->image;
-            $nameimg = time().'_'.$img->getClientOriginalName();
-            $img->move(public_path().'/images/',$nameimg);
-            $user->image = $nameimg;  
+
+            if ($request->has('image')) 
+            {
+                $this->validate($request,['image'=> 'image|max:512']);
+
+                //check if the image is not the default image
+                if ($user->image != "aucun_image.jpg") {
+                    $file_path = public_path().'/images/'. $user->image;
+                    if(File::exists($file_path)) {
+                        unlink($file_path); //delete from storage
+                    }
+                }
+                
+                $img = $request->image;
+                $nameimg = time().'_'.$img->getClientOriginalName();
+                $img->move(public_path().'/images/',$nameimg);
+                $user->image = $nameimg;  
+            }
+            $user->description = $request->description;
+            $user->save();
+
+
+            return redirect()->back()->with(['succes'=>'Compte Updated avec Succes']);
+        }else{
+            return redirect()->back();
         }
-        $user->description = $request->description;
-        $user->save();
-
-
-        return redirect()->back()->with(['succes'=>'Compte Updated avec Succes']);
     }
 
     /**
