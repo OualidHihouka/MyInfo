@@ -3,9 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Jobs\SendEmailJob;
+use App\Mail\ContactUs;
+use App\User;
+use App\Infocv;
+use Auth;
+use Validator;
+use App\domaine;
+use Mail;
 
 class contact extends Controller
 {
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/home';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['home','userscv']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +39,8 @@ class contact extends Controller
      */
     public function index()
     {
-        
-        return view('pages.contact');
+        $user = $user =  User::find(Auth::user()->id);
+        return view('pages.contact')->with('user',$user);
        
     }
 
@@ -36,7 +62,33 @@ class contact extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required',
+            'body' => 'required',
+        ]);
+        
+        $to_name =  $request->name;
+        $to_email = $request->email;
+        $subject = $request->subject;
+
+        $data = array('name' => $request->name , 'body'=>$request->body);
+
+        Mail::send('testmail', $data, function ($message) use($to_name,$to_email,$subject){
+            $message->to($to_email)->subject($subject);
+        });
+        return redirect()->back();
+        
+
+        // if($validatedData){
+        //     $details=[
+        //         "name"=>$request->name,
+        //         "email"=>$request->email,
+        //         "body"=>$request->body
+        //     ];
+        //     dispatch(new SendEmailJob($details));
+        //     return redirect()->route('contact.index');
+        // }
     }
 
     /**
@@ -47,7 +99,10 @@ class contact extends Controller
      */
     public function show($id)
     {
-        //
+        if ($id != null) {
+            $user =  User::find($id);
+            return view('pages.contact')->with('user',$user);
+        }  
     }
 
     /**
@@ -58,7 +113,7 @@ class contact extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**

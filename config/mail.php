@@ -101,6 +101,8 @@ return [
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
+    
+
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings

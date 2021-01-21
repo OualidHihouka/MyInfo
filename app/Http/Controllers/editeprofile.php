@@ -15,11 +15,15 @@ use App\domaine;
 class editeprofile extends Controller
 {
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('preventBackHistory'); $this->middleware('auth');
     }
-
 
 
 
@@ -167,7 +171,7 @@ class editeprofile extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 
     // public function addinfocv()

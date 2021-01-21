@@ -67,15 +67,17 @@ Route::get('/logout',[
     'as' => 'login.logout'
 ]);
 
-// Route::post('/userscv/show/','userscv@show');
+// Route::prefix('contact')->group(function () {
+//     Route::get('/','contact@index')->name('contact.index');
+//     Route::post('/contact','contact@store')->name('contact.store');
+// });
 
-// Route::post('/userscv/show',[
-//     'uses'=>'userscv@show',
-//     'as' => 'userscv.show'
-// ]);
+Route::get('/contact',[
+    'uses'=>'contact@index',
+    'as' => 'contact.index'
+]);
 
-
-//2480*3508
-
-
-
+Route::post('/contact',[
+    'uses'=>'contact@store',
+    'as' => 'contact.store'
+]);
